@@ -231,7 +231,6 @@ class QueryBuilder
      * @param $whereValue
      * @return $this
      */
-
     public function setWhere($whereKey, $whereOperator, $whereValue)
     {
         $this->_wheres[] = [
