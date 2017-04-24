@@ -6,34 +6,32 @@
 
 namespace Queries;
 
-class GroupQuery implements QueryInterface
+class LimitQuery implements QueryInterface
 {
     /**
-     * @var $_groupKey
+     * @var $_limit
      */
-    protected $_groupKey;
+    protected $_limit;
 
     /**
      * Build the __construct()
-     * @param $groupKey
+     * @param $limit
      */
-
-    public function __construct($groupKey)
+    public function __construct($limit)
     {
-        $this->_groupKey = $groupKey;
+        $this->_limit = $limit;
     }
 
     /**
      * Build the query.
      * @return bool|string
      */
-
     public function buildQuery()
     {
-        if (!$this->_groupKey) {
+        if (!$this->_limit) {
             return false;
         }
 
-        return "GROUP BY " . $this->_groupKey;
+        return "LIMIT " . $this->_limit;
     }
 }
