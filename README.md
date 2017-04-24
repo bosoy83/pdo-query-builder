@@ -1,37 +1,59 @@
-## Welcome to GitHub Pages
+Query Builder is a simple php pdo mysql database wrapper which supports the commonly used queries such as GROUP, ORDER, LIMIT and WHERE.
 
-You can use the [editor on GitHub](https://github.com/ugurkankya/pdo-query-builder/edit/master/README.md) to maintain and preview the content for your website in Markdown files.
+It also supports three join conditions (Inner Join, Left Join, Right Join) including Outer Joins.
 
-Whenever you commit to this repository, GitHub Pages will run [Jekyll](https://jekyllrb.com/) to rebuild the pages in your site, from the content in your Markdown files.
+The Query Builder has a great architecture of flexibility due it's flexibility it makes easy to extend the class with new functionalities.
 
-### Markdown
+Since the query builder uses prepared statements it's safe from sql injection and manual escaping isn't necessary.
 
-Markdown is a lightweight and easy-to-use syntax for styling your writing. It includes conventions for
+Please note that you still need to escape any html input by yourself.
 
-```markdown
-Syntax highlighted code block
+Installation & Setup
 
-# Header 1
-## Header 2
-### Header 3
+First switch to your project by using cd (cd /Applications/MAMP/htdocs).
 
-- Bulleted
-- List
+After enter composer dump-autoload -o in the terminal and run the command.
 
-1. Numbered
-2. List
+This command will create the composer autoloader for autoloading.
 
-**Bold** and _Italic_ and `Code` text
+Now take a look at the usage of the Query Builder.
 
-[Link](url) and ![Image](src)
-```
+require "vendor/autoload.php";
 
-For more details see [GitHub Flavored Markdown](https://guides.github.com/features/mastering-markdown/).
+$config = [
+    "host"     => "127.0.0.1:8889",
+    "database" => "database",
+    "username" => "root",
+    "password" => "root",
+    "charset"  => "utf8"
+];
 
-### Jekyll Themes
+$results = (new QueryBuilder($config))
+    ->setTable("testTable")
+    ->setOptions("*")
+    ->setInnerJoins("firstJoinTable", "joinAs", "joinColumn", "tableColumn")
+    ->setLeftJoins("secondJoinTable", "joinAs", "joinColumn", "tableColumn")
+    ->setRightJoins("thirdJoinTable", "joinAs", "joinColumn", "tableColumn", true)
+    ->setOrder("orderKey", "DESC")
+    ->setGroup("orderGroup")
+    ->setLimit(5)
+    ->getResults();
 
-Your Pages site will use the layout and styles from the Jekyll theme you have selected in your [repository settings](https://github.com/ugurkankya/pdo-query-builder/settings). The name of this theme is saved in the Jekyll `_config.yml` configuration file.
+    If you leave the options empty, it will fetch all the columns.
 
-### Support or Contact
+    For the left joins and right joins, if you pass the 5th parameter to true, outer join will be used.
 
-Having trouble with Pages? Check out our [documentation](https://help.github.com/categories/github-pages-basics/) or [contact support](https://github.com/contact) and we’ll help you sort it out.
+    If you don't specify the order type ASC will be used.
+
+    Query Builder supports fetching a single result too, just pass the first parameter to true and fetchOne method will be prefered.
+
+    Now let's take a look at the save() method.
+
+    $createUser = (new QueryBuilder($config))
+                ->setTable("users")
+                ->save([
+                 "username" => "ugurkankya",
+                 "location" => "Germany"
+                ]);
+
+                var_dump($createUser === true); // bool true //                
