@@ -17,7 +17,6 @@ class GroupQuery implements QueryInterface
      * Build the __construct()
      * @param $groupKey
      */
-
     public function __construct($groupKey)
     {
         $this->_groupKey = $groupKey;
@@ -27,7 +26,6 @@ class GroupQuery implements QueryInterface
      * Build the query.
      * @return bool|string
      */
-
     public function buildQuery()
     {
         if (!$this->_groupKey) {
