@@ -1,0 +1,15 @@
+{
+  "autoload": {
+    "classmap": [
+      "Queries/JoinQueries/InnerJoin.php",
+      "Queries/JoinQueries/LeftJoin.php",
+      "Queries/JoinQueries/RightJoin.php",
+      "Queries/GroupQuery.php",
+      "Queries/LimitQuery.php",
+      "Queries/OrderQuery.php",
+      "Queries/WhereQuery.php",
+      "Queries/QueryInterface.php",
+      "QueryBuilder.php"
+    ]
+  }
+}
