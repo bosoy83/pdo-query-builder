@@ -8,7 +8,7 @@ namespace Queries\JoinQueries;
 
 use Queries\QueryInterface;
 
-class InnerJoin implements QueryInterface
+class LeftJoin implements QueryInterface
 {
     /**
      * @var $_table
@@ -26,6 +26,10 @@ class InnerJoin implements QueryInterface
      * @var $_tableColumn
      */
     protected $_tableColumn;
+    /**
+     * @var $_joinOuter
+     */
+    protected $_joinOuter;
 
     /**
      * Build the __construct()
@@ -33,13 +37,15 @@ class InnerJoin implements QueryInterface
      * @param $joinAs
      * @param $joinColumn
      * @param $tableColumn
+     * @param $joinOuter
      */
-    public function __construct($table, $joinAs, $joinColumn, $tableColumn)
+    public function __construct($table, $joinAs, $joinColumn, $tableColumn, $joinOuter = false)
     {
         $this->_table = $table;
         $this->_joinAs = $joinAs;
         $this->_joinColumn = $joinColumn;
         $this->_tableColumn = $tableColumn;
+        $this->_joinOuter = $joinOuter;
     }
 
     /**
@@ -64,6 +70,6 @@ class InnerJoin implements QueryInterface
             return false;
         }
 
-        return "INNER JOIN " . $this->_table . " AS " . $this->_joinAs . " ON (" . $this->_tableColumn . " = " . $this->_joinColumn . ")";
+        return "LEFT " . ($this->_joinOuter ? "OUTER " : null) . "JOIN " . $this->_table . " AS " . $this->_joinAs . " ON (" . $this->_tableColumn . " = " . $this->_joinColumn . ")";
     }
 }
